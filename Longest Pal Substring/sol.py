@@ -1,19 +1,21 @@
-def longestPalindromicSubstring(string):
-	longest = string[0]
-	for i in range(len(string)):
-		try1 = palLength(string, i, i)
-		try2 = palLength(string, i-1, i)
-		word1 = string[try1[0]:try1[1]+1]
-		word2 = string[try2[0]:try2[1]+1]
-		if len(word1) > len(longest): longest = word1
-		if len(word2) > len(longest): longest = word2
+def longestPalindrome(self, s):
+	if len(s) <= 1: return s
+	boundI, boundJ = 0, 1
 	
-	return longest
+	for i in range(1,len(s)):
+		pal1 = self.getLongest(s, i-1, i)
+		pal2 = self.getLongest(s, i, i)		
+		comp1 = pal1[1]-pal1[0]
+		comp2 = pal2[1]-pal2[0]
+		if comp1 > boundJ-boundI: boundI, boundJ = pal1
+		if comp2 > boundJ-boundI: boundI, boundJ = pal2
 	
-def palLength(word, i, j):
-	while i >= 0 and j < len(word):
-		if word[i] != word[j]:
-			break
+	return s[boundI:boundJ]
+
+def getLongest(self, s, i, j):
+	while i >= 0 and j < len(s):
+		if s[i]!=s[j]: break
 		i-=1
 		j+=1
-	return [i+1, j-1]
+	
+	return [i+1, j]

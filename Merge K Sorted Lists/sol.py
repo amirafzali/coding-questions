@@ -1,19 +1,18 @@
 def mergeKLists(self, lists):
-    head = p1 = ListNode()
+    if not lists: return None
+    
     heap = []
     heapq.heapify(heap)
+    head = track = ListNode()
     
-    for p in lists: 
+    for p in lists:
         if p: heapq.heappush(heap, (p.val, p))
         
     while heap:
         current = heapq.heappop(heap)[1]
-        p1.next = current
-        if current.next:
-            current = current.next
-            heapq.heappush(heap, (current.val, current))
-        p1 = p1.next
-
-    p1.next = None
-    
+        track.next = current
+        track = track.next
+        current = current.next
+        if current: heapq.heappush(heap, (current.val, current))
+            
     return head.next
