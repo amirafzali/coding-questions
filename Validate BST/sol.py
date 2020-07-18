@@ -1,5 +1,9 @@
-def validateBst(tree, minVal=float('-inf'), maxVal = float('inf')):
-	if not tree: return True
-	if tree.value < minVal or tree.value >= maxVal: return False
+def isValidBST(self, root):
+	def isValid(root, most, least):
+		if not root: return True
+		left = isValid(root.left, root.val, least)
+		right = isValid(root.right, most, root.val)
+
+		return least < root.val < most and left and right
 	
-	return validateBst(tree.left, minVal, tree.value) and validateBst(tree.right, tree.value, maxVal)
+	return isValid(root, float('inf'), float('-inf'))
