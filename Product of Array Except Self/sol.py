@@ -11,3 +11,22 @@ def productExceptSelf(self, nums):
         current = current*nums[j+1]
     
     return left
+
+
+# With Division
+def productExceptSelf(self, nums):
+    if not nums or len(nums) <= 1: return nums
+    zeroes = nums.count(0)
+    prod = reduce(lambda tot,elm: tot*elm if elm!= 0 else tot, nums, 1)
+    
+    for i,num in enumerate(nums):
+        if zeroes:
+            if num == 0 and zeroes == 1:
+                nums[i] = prod
+            else:
+                nums[i] = 0
+        
+        else:
+            nums[i] = prod/num
+    
+    return nums

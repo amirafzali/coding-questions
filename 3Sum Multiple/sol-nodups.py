@@ -8,8 +8,8 @@ def threeSum(self, nums):
         if i > 0 and nums[i] == nums[i-1]: continue
         while j < k:
             current = nums[i]+nums[j]+nums[k]
-            if k < len(nums)-1 and nums[k] == nums[k+1]: 
-                k-=1
+            if j > i+1 and nums[j] == nums[j-1]: 
+                j+=1
                 continue
 
             if current == 0:

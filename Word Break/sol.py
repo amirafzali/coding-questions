@@ -1,15 +1,15 @@
-def wordBreak(self, s, wordDict):
-    lookup = set(wordDict)
-    mem = {}
+def wordBreak(s, wordDict):
+    states = set()
+    words = set(word for word in wordDict)
     
-    def isValid(s, words, mem):
-        if not s: return True
-        if s in mem: return s[mem]
-        for i in range(1,len(s)+1):
-            if s[:i] in words and isValid(s[i:], words, mem):
-                mem[s] = True
-                return True
-        mem[s] = False
-        return False
+    return self.search(s, words, 0, states)
     
-    return isValid(s, lookup, mem)
+def search(s, words, pos, states):
+    if pos >= len(s): return True
+    
+    for i in range(pos, len(s)):
+        if s[pos:i+1] in words and i+1 not in states and self.search(s, words, i+1, states):
+            return True
+        
+    states.add(pos)
+    return False

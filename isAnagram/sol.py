@@ -1,15 +1,12 @@
 def isAnagram(self, s, t):
     if len(s) != len(t): return False
+    if not s: return True
+
     found = Counter(s)
     
     for char in t:
-        if char not in found:
+        if char not in found or found[char] == 0:
             return False
-        elif found[char] == 0:
-            return False
-        else:
-            found[char]-=1
+        found[char]-=1
             
-    for val in found.values(): 
-        if val!=0: return False
-    return True
+    return sum(found.values) == 0
