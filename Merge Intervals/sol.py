@@ -3,13 +3,13 @@ def merge(self, intervals):
     intervals.sort(key=lambda x: x[0])
     res = [intervals[0]]
     
-    for i in range(1, len(intervals)):
-        refstart, refend = res[-1]
-        start, end = intervals[i]
+    for i in range(1,len(intervals)):
+        lastStart, lastEnd = res[-1]
+        nextStart, nextEnd = intervals[i]
         
-        if start <= refend and end > refend:
-            res[-1][1] = end
-        elif start > refend:
+        if nextStart > lastEnd:
             res.append(intervals[i])
-            
+        else:
+            res[-1][1] = max(lastEnd, nextEnd)
+    
     return res
