@@ -1,17 +1,13 @@
 def removeDuplicates(self, s, k):
     stack = []
+    
     for char in s:
-        if not stack:
-            stack.append((char,1))
+        if not stack or stack[-1][0] != char:
+            stack.append([char,1])
         else:
-            count = 1
-            if stack[-1][0] == char:
-                count = stack[-1][1]+1
-            
-            if count == k:
-                for i in range(k-1):
-                    stack.pop()
-            else:
-                stack.append((char,count))
+            last = stack.pop()
+            last[1] = (last[1]+1)%k
+            if last[1] != 0:
+                stack.append(last)
                 
-    return "".join([tup[0] for tup in stack])
+    return "".join([pair[0]*pair[1] for pair in stack])
