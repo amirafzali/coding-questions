@@ -1,21 +1,17 @@
 def verticalOrder(self, root):
     if not root: return []
-    small = large = 0
-    
+    cols = defaultdict(list)
     queue = deque([(root,0)])
-    res = defaultdict(list)
+    smallest = largest = 0
     
     while queue:
-        for i in range(len(queue)):
-            current = queue.popleft()
-            res[current[1]].append(current[0].val)
-            
-            if current[0].left:
-                small = min(small, current[1]-1)
-                queue.append((current[0].left,current[1]-1))
-                
-            if current[0].right:
-                large = max(large, current[1]+1)
-                queue.append((current[0].right,current[1]+1))
-                
-    return [res[i] for i in range(small,large+1)]
+        current, pos = queue.popleft()
+        cols[pos].append(current.val)
+        if current.left:
+            queue.append((current.left,pos-1))
+        if current.right:
+            queue.append((current.right,pos+1))
+        smallest = min(smallest,pos)
+        largest = max(largest,pos)
+        
+    return [cols[i] for i in range(smallest,largest+1) if i in cols]
